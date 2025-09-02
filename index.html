@@ -4,54 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Zizak • Setas</title>
-  <script src="https://cdn.tailwindcss.com">// === Guía de especies (contenido + render) ===</script>
-<script>
-const SPECIES_GUIDE = [
-  { key:'boletus', labelES:'Boletus grupo edulis', labelEU:'Boletus edulis taldea', edible:'excelente', traitsES:[
-      'Sombrero pardo; poros blancos→verdosos; pie robusto con retículo claro',
-      'Carne blanca, no azulea; olor agradable a fruto seco'
-    ], traitsEU:[
-      'Txanoa marroi; poroak zurixkak→berdexkak; zurtoin sendoa sare argiarekin',
-      'Haragia zuria, ez urdintzen; fruitu lehor usaina'
-    ], habitatES:'Hayedos/mixtos maduros; suelos frescos tras lluvias de fin de verano‑otoño', habitatEU:'Pago‑basoak/nahasiak; udazken hasierako eurien ondoko lur freskoa',
-    confES:[ 'Tylopilus felleus (amargo): retículo oscuro y poros rosados; no tóxica pero incomible', 'Boletus satanas (tóxico, raro): poros rojos, pie rojizo, azuleo marcado' ],
-    confEU:[ 'Tylopilus felleus (mingotsa): sare iluna eta poro arrosak; ez toxikoa baina janezina', 'Boletus satanas (toxikoa, arraroa): poro gorriak, zurtoin gorrizta, urdinketa nabarmena' ]
-  },
-  { key:'cantharellus', labelES:'Cantharellus cibarius (rebozuelo)', labelEU:'Cantharellus cibarius (kantarela)', edible:'muy bueno', traitsES:[
-      'Pliegues decurrentes (no láminas), olor a albaricoque', 'Carne firme, amarillo uniforme'
-    ], traitsEU:[ 'Tolesture jaitsierak (ez orriak), abrikot usaina', 'Haragi trinkoa, hori uniformea' ], habitatES:'Bosques claros; veranos lluviosos y otoños húmedos', habitatEU:'Basoa argia; uda euritsuak eta udazken hezea',
-    confES:[ 'Hygrophoropsis aurantiaca (falso rebozuelo): láminas verdaderas, carne blanda', 'Omphalotus illudens (tóxico): en tocones, láminas, a veces luminiscente' ],
-    confEU:[ 'Hygrophoropsis aurantiaca (kantarela faltsua): orri benetakoak, haragi biguna', 'Omphalotus illudens (toxikoa): enborretan, orriak, batzuetan distiratsua' ]
-  },
-  { key:'lactarius', labelES:'Lactarius deliciosus (níscalo)', labelEU:'Lactarius deliciosus (niskaloa)', edible:'bueno', traitsES:[ 'Látex naranja; círculos concéntricos; verdosea al corte', 'Láminas decurrentes, pie hueco en adultos' ], traitsEU:[ 'Esne laranja; zirkulu kontzentrikoak; ebakian berdexka', 'Orri jaitsierak, heldutan zurtoin hutsa' ], habitatES:'Pinares (Pinus sylvestris); tras 15–20 mm de lluvia', habitatEU:'Pinudiak (Pinus sylvestris); 15–20 mm euriaren ondoren', confES:[ 'L. torminosus (irritante): rosa y muy peludo', 'L. chrysorrheus (látex amarillo, tóxico leve)' ], confEU:[ 'L. torminosus (narritagarria): arrosa eta iletsu', 'L. chrysorrheus (esne hori, toxiko arina)' ] },
-  { key:'lepista_nuda', labelES:'Lepista nuda (pie azul)', labelEU:'Lepista nuda (oinezko urdina)', edible:'bueno', traitsES:[ 'Sombrero y láminas lilas; olor perfumado', 'Esporada rosa‑parda; carne elástica' ], traitsEU:[ 'Txanoa eta orriak moreak; usain atsegina', 'Espora hautsa arrosa‑marroia; haragi malgua' ], habitatES:'Bosques ricos en hojarasca al final de otoño‑invierno', habitatEU:'Hosto‑geruza ugariko basoak udazken amaiera‑negua', confES:[ 'Entoloma spp. (algunos tóxicos): láminas que viran a rosa, olor harinoso', 'Cortinarius violáceos (algunos tóxicos): cortina ferruginosa' ], confEU:[ 'Entoloma spp. (batzuk toxikoak): orriak arrosarat doaz, irin usaina', 'Cortinarius moreak (batzuk toxikoak): kortina herdoiltsua' ] },
-  { key:'hydnum_repandum', labelES:'Hydnum repandum (lengua de vaca)', labelEU:'Hydnum repandum', edible:'bueno', traitsES:[ 'Espinas decurrentes bajo el sombrero', 'Carne blanca, firme; sabor algo amargo en viejos' ], traitsEU:[ 'Azpian orratzak/espinak jaitsierarekin', 'Haragi zuria, trinkoa; zaharretan apur mikatza' ], habitatES:'Hayedos y mixtos frescos de otoño', habitatEU:'Pago‑baso eta nahasi freskoak, udazkena', confES:[ 'Hydnum rufescens (más pequeño, comestible)' ], confEU:[ 'Hydnum rufescens (txikiagoa, jangarria)' ] },
-  { key:'russula_cyanoxantha', labelES:'Russula cyanoxantha (carbonera)', labelEU:'Russula cyanoxantha (ikarogorria)', edible:'bueno', traitsES:[ 'Láminas flexibles (no quebradizas); cutícula separable', 'Colores variables verdosos‑violáceos' ], traitsEU:[ 'Orri malguak (ez hauskorra); azal uxagarria', 'Kolore aldakorrak: berde‑more' ], habitatES:'Caducifolios húmedos; otoño templado', habitatEU:'Hostoerorkor hezeak; udazken epela', confES:[ 'Russula emetica / sardonia (tóxicas): sabor muy picante', 'No probar en monte: prueba de sabor no recomendada' ], confEU:[ 'Russula emetica / sardonia (toxikoak): oso min‑zaporea', 'Ez probatu mendian: aho‑proba ez gomendatua' ] },
-  { key:'craterellus_cornucopioides', labelES:'Craterellus cornucopioides (trompeta negra)', labelEU:'Craterellus cornucopioides (trompeta beltza)', edible:'excelente', traitsES:[ 'Trompeta hueca, negra‑gris; sin láminas', 'Carne delgada, olor agradable' ], traitsEU:[ 'Iturri‑forma hutsa, beltz‑grisa; orririk gabe', 'Haragi mehea, usain atsegina' ], habitatES:'Hayedos húmedos; otoños lluviosos', habitatEU:'Pago‑baso hezeak; udazken euritsua', confES:[ 'Pocas confusiones peligrosas' ], confEU:[ 'Antzekotasun arriskutsuak gutxi' ] },
-  { key:'craterellus_tubaeformis', labelES:'Craterellus tubaeformis', labelEU:'Craterellus tubaeformis', edible:'bueno', traitsES:[ 'Sombrero pardo‑amarillo; pliegues decurrentes', 'Pie hueco amarillento' ], traitsEU:[ 'Txano hori‑marroia; tolesture jaitsierak', 'Zutabe huts horixka' ], habitatES:'Coníferas musgosas; finales de otoño‑invierno', habitatEU:'Ihintz‑pinudiak; udazken amaiera‑negua', confES:[ 'Confusiones leves con Cantharellus menores (comestibles)' ], confEU:[ 'Antzekotasun txikiak Cantharellus txikiekin (jangarriak)' ] },
-  { key:'hygrophorus_latitabundus', labelES:'Hygrophorus latitabundus (ilarraka)', labelEU:'Hygrophorus latitabundus (ilarreka)', edible:'muy bueno', traitsES:[ 'Sombrero viscoso oliváceo; láminas blancas decurrentes', 'Pie robusto; olor agradable' ], traitsEU:[ 'Txano likatsu berde‑olio; orri zuri jaitsieradunak', 'Zurtoin sendoa; usain atsegina' ], habitatES:'Pinares calizos; otoño avanzado', habitatEU:'Pinudi karstikoak; udazken aurreratua', confES:[ 'H. persoonii (similar, comestible)' ], confEU:[ 'H. persoonii (antzekoa, jangarria)' ] }
-];
+  <script src="https://cdn.tailwindcss.com"></script>
 
-function renderSpeciesGuide(){ const lang=getLang(); const modal=document.getElementById('guide-modal'); if(!modal) return; const title=document.getElementById('guide-title'); const desc=document.getElementById('guide-desc'); const warn=document.getElementById('guide-warning'); const search=document.getElementById('guide-search'); title.textContent = (lang==='eu')? 'Espezie gida' : 'Guía de especies'; desc.textContent=(lang==='eu')? 'Identifikazio azkarrerako fitxak: ezaugarriak, habitata eta antzeko arriskutsuak.' : 'Fichas rápidas: rasgos, hábitat y confusiones habituales.'; warn.textContent=(lang==='eu')? 'Oharra: ez jan onddoak identifikazio osoa izan gabe. Fitxa hauek orientagarriak dira.' : 'Aviso: no consumas setas sin identificación completa. Fichas orientativas.';
-  const q=(search?.value||'').toLowerCase(); const grid=document.getElementById('guide-grid'); if(!grid) return; const list = SPECIES_GUIDE.filter(s=>{ const lbl=(lang==='eu'?s.labelEU:s.labelES).toLowerCase(); return !q || lbl.includes(q) || s.key.includes(q); });
-  grid.innerHTML = list.map(s=>{ const label=(lang==='eu'?s.labelEU:s.labelES); const traits=(lang==='eu'?s.traitsEU:s.traitsES); const habitat=(lang==='eu'?s.habitatEU:s.habitatES); const conf=(lang==='eu'?s.confEU:s.confES); const color=(SPECIES_META[s.key]?.color||'#374151'); const light=(SPECIES_META[s.key]?.light||'#E5E7EB'); return `<div class="border rounded-lg p-3 bg-white">
-    <div class="flex items-center gap-2 mb-1"><span style="color:${color}">●</span><h4 class="font-semibold">${label}</h4></div>
-    <p class="text-xs mb-2"><span class="px-2 py-0.5 rounded" style="background:${light}; color:${color}">${(lang==='eu'?'jangarria:':'comestible:')} ${s.edible}</span></p>
-    <p class="text-xs text-gray-600 font-semibold mb-1">${lang==='eu'?'Ezaugarri nagusiak':'Rasgos clave'}</p>
-    <ul class="list-disc list-inside text-sm text-gray-700 mb-2">${traits.map(x=>`<li>${x}</li>`).join('')}</ul>
-    <p class="text-xs text-gray-600 font-semibold mb-1">${lang==='eu'?'Habitat eta garaia':'Hábitat y época'}</p>
-    <p class="text-sm text-gray-700 mb-2">${habitat}</p>
-    <p class="text-xs text-gray-600 font-semibold mb-1">${lang==='eu'?'Antzekoak eta kontuz':'Confusiones y precaución'}</p>
-    <ul class="list-disc list-inside text-sm text-gray-700">${conf.map(x=>`<li>${x}</li>`).join('')}</ul>
-  </div>`; }).join(''); }
 
-// abrir/cerrar guía y búsqueda
-(function(){ const btn=document.getElementById('guide-button'); const modal=document.getElementById('guide-modal'); if(btn&&modal){ btn.onclick=()=>{ renderSpeciesGuide(); modal.style.display='block'; }; const close=modal.querySelector('.close-x'); if(close) close.onclick=()=> modal.style.display='none'; window.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; }); const search=document.getElementById('guide-search'); if(search){ search.addEventListener('input', ()=> renderSpeciesGuide()); } }
-  // refrescar guía al cambiar idioma
-  const prevToggle=window.__toggleLang; window.__toggleLang=function(){ const r=(prevToggle?prevToggle.apply(this,arguments):null); renderSpeciesGuide(); return r; };
-})();
-
-</script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     .card-chance-Alta { background-image: linear-gradient(to right, #D1FAE5, #34D399); }
@@ -598,7 +553,19 @@ function computeBaseProbabilities(dailyData, location){
 
 function speciesPulseWeight(i, speciesKey, habitat, smiVal, ctx){ const W=SETTINGS.triggers.weights[speciesKey]; const trig15=ctx.trig15[i]||0, trig20=ctx.trig20[i]||0; const trig25=computePulseGaussian(ctx.rain||[],2, SETTINGS.triggers.mm25.th, SETTINGS.triggers.mm25.lagMin, SETTINGS.triggers.mm25.lagMax)[i]||0; let base = W.w15*trig15 + W.w20*trig20 + W.w25*trig25; if(speciesKey==='lactarius' && habitat==='pinar_silvestre') base*= (W.pineBoost||1.0); if(speciesKey==='cantharellus' && smiVal>=0.6) base = Math.max(base, trig15); return clamp(base,0,1); }
 
-const SPECIES_META = { boletus:{ color:'#047857', light:'#D1FAE5' }, cantharellus:{ color:'#CA8A04', light:'#FEF3C7' }, lactarius:{ color:'#B91C1C', light:'#FEE2E2' }, lepista_nuda:{ color:'#6D28D9', light:'#EDE9FE' }, hydnum_repandum:{ color:'#9A3412', light:'#FFEDD5' } };
+const SPECIES_META = { 
+    boletus: { color: '#047857', light: '#D1FAE5' }, 
+    cantharellus: { color: '#CA8A04', light: '#FEF3C7' }, 
+    lactarius: { color: '#B91C1C', light: '#FEE2E2' }, 
+    lepista_nuda: { color: '#6D28D9', light: '#EDE9FE' }, 
+    hydnum_repandum: { color: '#9A3412', light: '#FFEDD5' },
+    russula_cyanoxantha: { color: '#6A994E', light: '#D8E2CB' },
+    craterellus_cornucopioides: { color: '#334155', light: '#CFCFCF' },
+    craterellus_tubaeformis: { color: '#88582C', light: '#E8D5C8' },
+    hygrophorus_latitabundus: { color: '#6B7280', light: '#D1D5DB' },
+};
+
+
 // añadir paleta extra
 Object.assign(SPECIES_META, EXTRA_META);
 
@@ -754,6 +721,57 @@ document.getElementById('__langBtn').addEventListener('click', ()=> window.__tog
   const prevToggle=window.__toggleLang; window.__toggleLang=function(){ const r=(prevToggle?prevToggle.apply(this,arguments):null); translateBreakdownsInDOM(); return r; };
   const prevRefresh=window.refreshGrid; window.refreshGrid=function(){ const r=prevRefresh.apply(this,arguments); translateBreakdownsInDOM(); return r; };
 })();
+
 </script>
+
+<script>
+// === Guía de especies (contenido + render) ===
+const SPECIES_GUIDE = [
+  { key:'boletus', labelES:'Boletus grupo edulis', labelEU:'Boletus edulis taldea', edible:'excelente', traitsES:[
+      'Sombrero pardo; poros blancos→verdosos; pie robusto con retículo claro',
+      'Carne blanca, no azulea; olor agradable a fruto seco'
+    ], traitsEU:[
+      'Txanoa marroi; poroak zurixkak→berdexkak; zurtoin sendoa sare argiarekin',
+      'Haragia zuria, ez urdintzen; fruitu lehor usaina'
+    ], habitatES:'Hayedos/mixtos maduros; suelos frescos tras lluvias de fin de verano‑otoño', habitatEU:'Pago‑basoak/nahasiak; udazken hasierako eurien ondoko lur freskoa',
+    confES:[ 'Tylopilus felleus (amargo): retículo oscuro y poros rosados; no tóxica pero incomible', 'Boletus satanas (tóxico, raro): poros rojos, pie rojizo, azuleo marcado' ],
+    confEU:[ 'Tylopilus felleus (mingotsa): sare iluna eta poro arrosak; ez toxikoa baina janezina', 'Boletus satanas (toxikoa, arraroa): poro gorriak, zurtoin gorrizta, urdinketa nabarmena' ]
+  },
+  { key:'cantharellus', labelES:'Cantharellus cibarius (rebozuelo)', labelEU:'Cantharellus cibarius (kantarela)', edible:'muy bueno', traitsES:[
+      'Pliegues decurrentes (no láminas), olor a albaricoque', 'Carne firme, amarillo uniforme'
+    ], traitsEU:[ 'Tolesture jaitsierak (ez orriak), abrikot usaina', 'Haragi trinkoa, hori uniformea' ], habitatES:'Bosques claros; veranos lluviosos y otoños húmedos', habitatEU:'Basoa argia; uda euritsuak eta udazken hezea',
+    confES:[ 'Hygrophoropsis aurantiaca (falso rebozuelo): láminas verdaderas, carne blanda', 'Omphalotus illudens (tóxico): en tocones, láminas, a veces luminiscente' ],
+    confEU:[ 'Hygrophoropsis aurantiaca (kantarela faltsua): orri benetakoak, haragi biguna', 'Omphalotus illudens (toxikoa): enborretan, orriak, batzuetan distiratsua' ]
+  },
+  { key:'lactarius', labelES:'Lactarius deliciosus (níscalo)', labelEU:'Lactarius deliciosus (niskaloa)', edible:'bueno', traitsES:[ 'Látex naranja; círculos concéntricos; verdosea al corte', 'Láminas decurrentes, pie hueco en adultos' ], traitsEU:[ 'Esne laranja; zirkulu kontzentrikoak; ebakian berdexka', 'Orri jaitsierak, heldutan zurtoin hutsa' ], habitatES:'Pinares (Pinus sylvestris); tras 15–20 mm de lluvia', habitatEU:'Pinudiak (Pinus sylvestris); 15–20 mm euriaren ondoren', confES:[ 'L. torminosus (irritante): rosa y muy peludo', 'L. chrysorrheus (látex amarillo, tóxico leve)' ], confEU:[ 'L. torminosus (narritagarria): arrosa eta iletsu', 'L. chrysorrheus (esne hori, toxiko arina)' ] },
+  { key:'lepista_nuda', labelES:'Lepista nuda (pie azul)', labelEU:'Lepista nuda (oinezko urdina)', edible:'bueno', traitsES:[ 'Sombrero y láminas lilas; olor perfumado', 'Esporada rosa‑parda; carne elástica' ], traitsEU:[ 'Txanoa eta orriak moreak; usain atsegina', 'Espora hautsa arrosa‑marroia; haragi malgua' ], habitatES:'Bosques ricos en hojarasca al final de otoño‑invierno', habitatEU:'Hosto‑geruza ugariko basoak udazken amaiera‑negua', confES:[ 'Entoloma spp. (algunos tóxicos): láminas que viran a rosa, olor harinoso', 'Cortinarius violáceos (algunos tóxicos): cortina ferruginosa' ], confEU:[ 'Entoloma spp. (batzuk toxikoak): orriak arrosarat doaz, irin usaina', 'Cortinarius moreak (batzuk toxikoak): kortina herdoiltsua' ] },
+  { key:'hydnum_repandum', labelES:'Hydnum repandum (lengua de vaca)', labelEU:'Hydnum repandum', edible:'bueno', traitsES:[ 'Espinas decurrentes bajo el sombrero', 'Carne blanca, firme; sabor algo amargo en viejos' ], traitsEU:[ 'Azpian orratzak/espinak jaitsierarekin', 'Haragi zuria, trinkoa; zaharretan apur mikatza' ], habitatES:'Hayedos y mixtos frescos de otoño', habitatEU:'Pago‑baso eta nahasi freskoak, udazkena', confES:[ 'Hydnum rufescens (más pequeño, comestible)' ], confEU:[ 'Hydnum rufescens (txikiagoa, jangarria)' ] },
+  { key:'russula_cyanoxantha', labelES:'Russula cyanoxantha (carbonera)', labelEU:'Russula cyanoxantha (ikarogorria)', edible:'bueno', traitsES:[ 'Láminas flexibles (no quebradizas); cutícula separable', 'Colores variables verdosos‑violáceos' ], traitsEU:[ 'Orri malguak (ez hauskorra); azal uxagarria', 'Kolore aldakorrak: berde‑more' ], habitatES:'Caducifolios húmedos; otoño templado', habitatEU:'Hostoerorkor hezeak; udazken epela', confES:[ 'Russula emetica / sardonia (tóxicas): sabor muy picante', 'No probar en monte: prueba de sabor no recomendada' ], confEU:[ 'Russula emetica / sardonia (toxikoak): oso min‑zaporea', 'Ez probatu mendian: aho‑proba ez gomendatua' ] },
+  { key:'craterellus_cornucopioides', labelES:'Craterellus cornucopioides (trompeta negra)', labelEU:'Craterellus cornucopioides (trompeta beltza)', edible:'excelente', traitsES:[ 'Trompeta hueca, negra‑gris; sin láminas', 'Carne delgada, olor agradable' ], traitsEU:[ 'Iturri‑forma hutsa, beltz‑grisa; orririk gabe', 'Haragi mehea, usain atsegina' ], habitatES:'Hayedos húmedos; otoños lluviosos', habitatEU:'Pago‑baso hezeak; udazken euritsua', confES:[ 'Pocas confusiones peligrosas' ], confEU:[ 'Antzekotasun arriskutsuak gutxi' ] },
+  { key:'craterellus_tubaeformis', labelES:'Craterellus tubaeformis', labelEU:'Craterellus tubaeformis', edible:'bueno', traitsES:[ 'Sombrero pardo‑amarillo; pliegues decurrentes', 'Pie hueco amarillento' ], traitsEU:[ 'Txano hori‑marroia; tolesture jaitsierak', 'Zutabe huts horixka' ], habitatES:'Coníferas musgosas; finales de otoño‑invierno', habitatEU:'Ihintz‑pinudiak; udazken amaiera‑negua', confES:[ 'Confusiones leves con Cantharellus menores (comestibles)' ], confEU:[ 'Antzekotasun txikiak Cantharellus txikiekin (jangarriak)' ] },
+  { key:'hygrophorus_latitabundus', labelES:'Hygrophorus latitabundus (ilarraka)', labelEU:'Hygrophorus latitabundus (ilarreka)', edible:'muy bueno', traitsES:[ 'Sombrero viscoso oliváceo; láminas blancas decurrentes', 'Pie robusto; olor agradable' ], traitsEU:[ 'Txano likatsu berde‑olio; orri zuri jaitsieradunak', 'Zurtoin sendoa; usain atsegina' ], habitatES:'Pinares calizos; otoño avanzado', habitatEU:'Pinudi karstikoak; udazken aurreratua', confES:[ 'H. persoonii (similar, comestible)' ], confEU:[ 'H. persoonii (antzekoa, jangarria)' ] }
+];
+
+function renderSpeciesGuide(){ const lang=getLang(); const modal=document.getElementById('guide-modal'); if(!modal) return; const title=document.getElementById('guide-title'); const desc=document.getElementById('guide-desc'); const warn=document.getElementById('guide-warning'); const search=document.getElementById('guide-search'); title.textContent = (lang==='eu')? 'Espezie gida' : 'Guía de especies'; desc.textContent=(lang==='eu')? 'Identifikazio azkarrerako fitxak: ezaugarriak, habitata eta antzeko arriskutsuak.' : 'Fichas rápidas: rasgos, hábitat y confusiones habituales.'; warn.textContent=(lang==='eu')? 'Oharra: ez jan onddoak identifikazio osoa izan gabe. Fitxa hauek orientagarriak dira.' : 'Aviso: no consumas setas sin identificación completa. Fichas orientativas.';
+  const q=(search?.value||'').toLowerCase(); const grid=document.getElementById('guide-grid'); if(!grid) return; const list = SPECIES_GUIDE.filter(s=>{ const lbl=(lang==='eu'?s.labelEU:s.labelES).toLowerCase(); return !q || lbl.includes(q) || s.key.includes(q); });
+  grid.innerHTML = list.map(s=>{ const label=(lang==='eu'?s.labelEU:s.labelES); const traits=(lang==='eu'?s.traitsEU:s.traitsES); const habitat=(lang==='eu'?s.habitatEU:s.habitatES); const conf=(lang==='eu'?s.confEU:s.confES); const color=(SPECIES_META[s.key]?.color||'#374151'); const light=(SPECIES_META[s.key]?.light||'#E5E7EB'); return `<div class="border rounded-lg p-3 bg-white">
+    <div class="flex items-center gap-2 mb-1"><span style="color:${color}">●</span><h4 class="font-semibold">${label}</h4></div>
+    <p class="text-xs mb-2"><span class="px-2 py-0.5 rounded" style="background:${light}; color:${color}">${(lang==='eu'?'jangarria:':'comestible:')} ${s.edible}</span></p>
+    <p class="text-xs text-gray-600 font-semibold mb-1">${lang==='eu'?'Ezaugarri nagusiak':'Rasgos clave'}</p>
+    <ul class="list-disc list-inside text-sm text-gray-700 mb-2">${traits.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <p class="text-xs text-gray-600 font-semibold mb-1">${lang==='eu'?'Habitat eta garaia':'Hábitat y época'}</p>
+    <p class="text-sm text-gray-700 mb-2">${habitat}</p>
+    <p class="text-xs text-gray-600 font-semibold mb-1">${lang==='eu'?'Antzekoak eta kontuz':'Confusiones y precaución'}</p>
+    <ul class="list-disc list-inside text-sm text-gray-700">${conf.map(x=>`<li>${x}</li>`).join('')}</ul>
+  </div>`; }).join(''); }
+
+// abrir/cerrar guía y búsqueda
+(function(){ const btn=document.getElementById('guide-button'); const modal=document.getElementById('guide-modal'); if(btn&&modal){ btn.onclick=()=>{ renderSpeciesGuide(); modal.style.display='block'; }; const close=modal.querySelector('.close-x'); if(close) close.onclick=()=> modal.style.display='none'; window.addEventListener('click',(e)=>{ if(e.target===modal) modal.style.display='none'; }); const search=document.getElementById('guide-search'); if(search){ search.addEventListener('input', ()=> renderSpeciesGuide()); } }
+  // refrescar guía al cambiar idioma
+  const prevToggle=window.__toggleLang; window.__toggleLang=function(){ const r=(prevToggle?prevToggle.apply(this,arguments):null); renderSpeciesGuide(); return r; };
+})();
+
+</script>
+
 </body>
 </html>
